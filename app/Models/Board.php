@@ -8,7 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Board extends Model
 {
     use HasFactory;
-
+    // 登録・更新可能なカラムの指定
+    protected $fillable = [
+        'id',
+        'user_id',
+        'title',
+        'post',
+        'created_at',
+        'updated_at'
+    ];
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -20,11 +28,32 @@ class Board extends Model
 
     public function getBoards()
     {
-        try {
-            $boardDates = Board::all();
-            return $boardDates;
-        }catch (\Exception $e) {
-            $e->getMessage();
-        }
+            return  Board::all();
+    }
+
+    public function InsertPost($request)
+    {
+        return $this->create(
+            [
+                'user_id' =>  1,
+                'title' => $request->title,
+                'post' => $request->post,
+            ]
+        );
+    }
+
+
+    public function updateBoard($request, $boardDate)
+    {
+        return $boardDate->fill([
+            'title' => $request->title,
+            'post' => $request->post,
+        ])->save();
+    }
+
+
+    public function destroyBoard($id)
+    {
+        return $this->destroy($id);
     }
 }

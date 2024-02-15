@@ -19,4 +19,8 @@ Route::get('/', function () {
 
 
 
-Route::get('/Board', [BoardController::class, 'index']);
+Route::get('/Board', [BoardController::class, 'index'])->name('board.index');
+Route::post('/Board', [BoardController::class, 'store'])->name('board.store');
+Route::get('/Board/edit/{id}', [BoardController::class, 'edit'])->name('board.edit');
+Route::put('/Board/update/{id}', [BoardController::class, 'update'])->name('board.update');
+Route::delete('/Board/destroy/{id}', [BoardController::class, 'destroy'])->name('board.destroy');
