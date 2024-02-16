@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BoardController;
+use App\Http\Controllers\CommentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,3 +25,6 @@ Route::post('/Board', [BoardController::class, 'store'])->name('board.store');
 Route::get('/Board/edit/{id}', [BoardController::class, 'edit'])->name('board.edit');
 Route::put('/Board/update/{id}', [BoardController::class, 'update'])->name('board.update');
 Route::delete('/Board/destroy/{id}', [BoardController::class, 'destroy'])->name('board.destroy');
+
+Route::post('/comment', [CommentController::class, 'store'])->name('comment.store');
+Route::delete('/comment/destroy/{id}', [CommentController::class, 'destroy'])->name('comment.destroy');

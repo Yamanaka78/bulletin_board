@@ -21,7 +21,7 @@
       </br>
       <textarea name="post" id="post"></textarea>
       </br>
-      <button></a>投稿</button>
+      <button>投稿</button>
     </form>
   </div>
   <div>
@@ -39,12 +39,24 @@
           <button>削除</button>
         </form>
         </br>
+        <label>コメント</label>
+        <form action="{{ route('comment.store') }}"method="POST">
+          @csrf
+          <input type='hidden' name='board_id' value="{{ $board->id }}">
+          <textarea name="comment" id="comment"></textarea>
+          </br>
+          <button>投稿</button>
+        </form>
         @if ($board->comment->count() > 0)
           @foreach($board->comment as $comment)
-            <label>コメント</label>
             <p>{{ $comment->comment }}</p>
             <label>投稿者</label>
             <p>{{ $comment->user->name }}</p>
+            <form action="{{ route('comment.destroy', ['id' => $comment->id]) }}" method="POST">
+              @csrf
+              @method('DELETE')
+              <button>削除</button>
+            </form>
           @endforeach
         @endif
       @endforeach

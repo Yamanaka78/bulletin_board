@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Board extends Model
 {
@@ -26,6 +27,16 @@ class Board extends Model
         return $this->hasMany(comment::class);
     }
 
+    /**
+     * @return void
+     */
+    public static function booted(): void
+    {
+        parent::booted();
+        static::deleting(function ($board) {
+            $board->comment()->delete();
+        });
+    }
     public function getBoards()
     {
             return  Board::all();
@@ -54,6 +65,9 @@ class Board extends Model
 
     public function destroyBoard($id)
     {
-        return $this->destroy($id);
+
+        $boardDate = Board::find($id);
+
+        $boardDate->delete();
     }
 }
